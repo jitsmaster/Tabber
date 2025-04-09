@@ -20,7 +20,8 @@
 		"onCommand:tabber.formatAndConvert",
 		"onCommand:tabber.analyzeIndentation",
 		"onCommand:tabber.configureSettings",
-		"onCommand:tabber.showAnalysisPanel"
+		"onCommand:tabber.showAnalysisPanel",
+		"onCommand:tabber.showIndentationFixerPanel"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -44,6 +45,10 @@
 			{
 				"command": "tabber.showAnalysisPanel",
 				"title": "Tabber: Show Indentation Analysis Panel"
+			},
+			{
+				"command": "tabber.showIndentationFixerPanel",
+				"title": "Tabber: Show Indentation Fixer Panel"
 			}
 		],
 		"menus": {
@@ -52,6 +57,20 @@
 					"command": "tabber.showAnalysisPanel",
 					"group": "navigation",
 					"when": "editorTextFocus"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "tabber.showIndentationFixerPanel",
+					"group": "Tabber",
+					"when": "editorTextFocus"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "tabber.showIndentationFixerPanel",
+					"group": "Tabber",
+					"when": "resourceLangId =~ /javascript|typescript|javascriptreact|typescriptreact|html|css|json/"
 				}
 			]
 		},

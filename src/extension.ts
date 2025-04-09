@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { TabberService } from './services/tabber-service';
 import { ConfigurationService } from './services/configuration-service';
 import { WebviewManager } from './ui/webview-manager';
+import { IndentationFixerPanel } from './ui/indentation-fixer-panel';
 
 /**
  * Activate the extension
@@ -39,6 +40,14 @@ export function activate(context: vscode.ExtensionContext): void {
 			
 			// Message will be sent to webview when analysis completes
 			webviewManager.analyzeWorkspace();
+		}),
+		vscode.commands.registerCommand('tabber.showIndentationFixerPanel', (fileUri: vscode.Uri) => {
+			// Get file path
+			const filePath = fileUri ? fileUri.fsPath : undefined;
+			
+			// Create and show the indentation fixer panel
+			const panel = new IndentationFixerPanel(context, configService, tabberService, filePath);
+			panel.reveal();
 		})
 	];
 	

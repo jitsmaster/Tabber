@@ -6,9 +6,9 @@ This directory contains the React-based UI for the Tabber VS Code extension.
 
 - `src/` - React source code
   - `components/` - React components
-    - `App.jsx` - Main application component
-    - `ConfirmationDialog.jsx` - Dialog for confirming actions
-    - `FileItem.jsx` - Individual file item with indentation issues
+	- `App.jsx` - Main application component
+	- `ConfirmationDialog.jsx` - Dialog for confirming actions
+	- `FileItem.jsx` - Individual file item with indentation issues
   - `index.jsx` - React entry point
 - `index.html` - HTML template
 - `styles.css` - CSS styles
