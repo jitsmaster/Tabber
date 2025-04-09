@@ -86,9 +86,10 @@ export class ConfigurationService {
 	/**
 	 * Check if a file should be processed based on its language
 	 * @param document The document to check
+	 * @param respectInsertSpacesSetting If true, respects VS Code's insertSpaces setting
 	 * @returns True if the file should be processed
 	 */
-	public shouldProcessFile(document: vscode.TextDocument): boolean {
+	public shouldProcessFile(document: vscode.TextDocument, respectInsertSpacesSetting = true): boolean {
 		const languageId = document.languageId;
 		
 		// Check exclusion list
@@ -101,8 +102,8 @@ export class ConfigurationService {
 			return this._includeLanguagesOnly.includes(languageId);
 		}
 		
-		// Check VS Code settings for this language
-		if (this._respectVSCodeSettings) {
+		// Check VS Code settings for this language (only if requested)
+		if (respectInsertSpacesSetting && this._respectVSCodeSettings) {
 			const languageConfig = vscode.workspace.getConfiguration(`[${languageId}]`);
 			const editorConfig = languageConfig.get<{ insertSpaces?: boolean }>('editor');
 			

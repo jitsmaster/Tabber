@@ -110,14 +110,19 @@ export class SpaceToTabConverter {
 		if (leadingWhitespace.includes('\t')) {
 			return this.convertMixedIndentation(leadingWhitespace) + contentAfterWhitespace;
 		}
+		
+		// Only convert if there are actually spaces in the leading whitespace
+		if (!leadingWhitespace.includes(' ')) {
+			return line;
+		}
 
 		// Convert spaces to tabs
 		const spacesCount = leadingWhitespace.length;
 		const tabsCount = Math.floor(spacesCount / this.tabSize);
 		const remainingSpaces = spacesCount % this.tabSize;
 		
-		const newIndentation = 
-			'\t'.repeat(tabsCount) + 
+		const newIndentation =
+			'\t'.repeat(tabsCount) +
 			(remainingSpaces > 0 ? ' '.repeat(remainingSpaces) : '');
 		
 		return newIndentation + contentAfterWhitespace;

@@ -123,8 +123,8 @@ export class TabberService {
 		
 		const document = editor.document;
 		
-		// Check if file should be processed
-		if (!this.configService.shouldProcessFile(document)) {
+		// Check if file should be processed - ignore insertSpaces setting for manual conversion
+		if (!this.configService.shouldProcessFile(document, false)) {
 			vscode.window.showInformationMessage(
 				`Tabber: Skipping file due to excluded language (${document.languageId})`
 			);
