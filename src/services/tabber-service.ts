@@ -3,6 +3,7 @@ import { IndentationAnalyzer, IndentationAnalysisResult } from '../processors/in
 import { SpaceToTabConverter, ConversionOptions } from '../processors/space-to-tab-converter';
 import { ContentPreserver } from '../processors/content-preserver';
 import { ConfigurationService } from './configuration-service';
+import { IndentationUtils } from '../utils/indentation-utils';
 
 /**
  * Main service for the Tabber extension
@@ -246,7 +247,41 @@ export class TabberService {
 		// Convert document
 		const result = converter.convert(document);
 		
-		return result.edits;
+		// Ensure indentation uses tabs with exactly 4 spaces per tab, regardless of the configured tab size
+		const standardizedEdits = result.edits.map(edit => {
+			const lineText = document.lineAt(edit.range.start.line).text;
+			const leadingWhitespace = IndentationUtils.extractLeadingWhitespace(lineText);
+			
+			// Skip if no leading whitespace or already using tabs
+			if (leadingWhitespace.length === 0) {
+				return edit;
+			}
+			
+			// Convert the edit text to use tabs with 4 spaces per tab
+			const contentAfterWhitespace = edit.newText.substring(
+				IndentationUtils.extractLeadingWhitespace(edit.newText).length
+			);
+			
+			// Convert to all spaces first to standardize
+			const leadingWhitespaceInEditText = IndentationUtils.extractLeadingWhitespace(edit.newText);
+			const expandedToSpaces = leadingWhitespaceInEditText.replace(/\t/g, ' '.repeat(4));
+			
+			// Then convert back to tabs with 4 spaces per tab
+			const spacesCount = expandedToSpaces.length;
+			const tabsCount = Math.floor(spacesCount / 4);
+			const remainingSpaces = spacesCount % 4;
+			
+			const standardizedIndentation = '\t'.repeat(tabsCount) +
+				(remainingSpaces > 0 ? ' '.repeat(remainingSpaces) : '');
+			
+			// Create a new edit with the standardized indentation
+			return new vscode.TextEdit(
+				edit.range,
+				standardizedIndentation + contentAfterWhitespace
+			);
+		});
+		
+		return standardizedEdits;
 	}
 
 	/**

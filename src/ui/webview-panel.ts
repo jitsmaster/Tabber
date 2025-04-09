@@ -3,6 +3,7 @@ import { ConfigurationService } from '../services/configuration-service';
 import { TabberService } from '../services/tabber-service';
 import { getNonce } from '../utils/webview-utils';
 
+
 /**
  * WebView panel for displaying and fixing indentation issues
  */
