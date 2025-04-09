@@ -8,7 +8,7 @@ import { ConfigurationService } from './configuration-service';
  * Main service for the Tabber extension
  */
 export class TabberService {
-	private analyzer: IndentationAnalyzer;
+	public analyzer: IndentationAnalyzer;
 	private configService: ConfigurationService;
 	private statusBarItem: vscode.StatusBarItem;
 
@@ -224,9 +224,10 @@ export class TabberService {
 	/**
 	 * Generate edits for converting spaces to tabs
 	 * @param document The document to convert
+	 * @public Used by the webview UI
 	 * @returns Array of text edits
 	 */
-	private async generateConversionEdits(document: vscode.TextDocument): Promise<vscode.TextEdit[]> {
+	public async generateConversionEdits(document: vscode.TextDocument): Promise<vscode.TextEdit[]> {
 		// Get tab size from configuration
 		const tabSize = this.configService.getEffectiveTabSize(document);
 		

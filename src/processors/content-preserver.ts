@@ -177,7 +177,7 @@ export class ContentPreserver {
 	private captureRegexLiterals(document: vscode.TextDocument, text: string): void {
 		// This is a simplified regex literal finder
 		// A proper implementation would need to consider context to avoid false positives
-		const regexLiteralRegex = /(?<![=<>:]\s*)\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/[gimyus]*/g;
+		const regexLiteralRegex = /(?<![=<>:]\s*)\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/[gimyus]*/g;
 		
 		let match: RegExpExecArray | null;
 		while ((match = regexLiteralRegex.exec(text)) !== null) {

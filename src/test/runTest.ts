@@ -1,7 +1,5 @@
 import * as path from 'path';
-import * as cp from 'child_process';
 import {
-	downloadAndUnzipVSCode,
 	runTests
 } from 'vscode-test';
 
