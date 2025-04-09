@@ -1,0 +1,36 @@
+# Development files
+.vscode/**
+.vscode-test/**
+.git/**
+.gitignore
+scripts/**
+docs/**
+src/**
+test/**
+out/test/**
+tsconfig.json
+webpack.config.js
+.eslintrc.json
+.github/**
+
+# Node modules
+node_modules/**
+
+# Build output (except the necessary files)
+out/**
+!out/extension.js
+!out/**/*.js
+
+# Source code (since we include compiled output)
+**/*.ts
+**/*.map
+
+# Documentation files not needed in the extension package
+CONTRIBUTING.md
+
+# Test files
+**/*.spec.*
+**/*.test.*
+
+# Build/deployment scripts
+scripts/**
